@@ -8,6 +8,7 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { VictimImage } from './entities/victim-image.entity';
 import { isUUID } from 'class-validator';
 import { Cron } from '@nestjs/schedule';
+import { UpdateDetailsDto } from './dto/update-death-details.dto';
 
 @Injectable()
 export class VictimService {
@@ -160,7 +161,7 @@ export class VictimService {
     }
   }
 
-  async updateDeathDetails(id: string, updateDescription: UpdateDescription) {
+  async updateDeathDetails(id: string, UpdateDetailsDto: UpdateDetailsDto) {
 
     const currentTimestamp: Date = new Date();
     const offset = 5; // Diferencia de +5 horas entre el sistema y PostgreSQL
@@ -169,7 +170,7 @@ export class VictimService {
     const victim = await this.victimRepository.preload({
       id: id,
       EditedAt: currentTimestamp,
-      ...updateDescription
+      ...this.updateDeathDetails
     });
 
     if(!victim) throw new NotFoundException(`Victim with id ${id} not found`);

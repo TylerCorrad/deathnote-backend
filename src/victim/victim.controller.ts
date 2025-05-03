@@ -5,6 +5,7 @@ import { UpdateDeathTypeDto } from './dto/update-death-type.dto';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { UpdateDescription } from 'typeorm';
 import { OnlyDetailsKeyPipe } from './pipes/onlydetailskeypipe';
+import { UpdateDetailsDto } from './dto/update-death-details.dto';
 
 @Controller('victim')
 export class VictimController {
@@ -37,12 +38,13 @@ export class VictimController {
   }
 
   @Patch('deathdetails/:id')
-  updateDeathDetails(
-    @Param('id',ParseUUIDPipe) id: string,
-    @Body(OnlyDetailsKeyPipe) updateDescription: UpdateDescription
-  ) {
-    return this.victimService.updateDeathDetails(id, updateDescription);
-  }
+updateDeathDetails(
+  @Param('id', ParseUUIDPipe) id: string,
+  @Body(OnlyDetailsKeyPipe) updateDescription: UpdateDetailsDto
+) {
+  return this.victimService.updateDeathDetails(id, updateDescription);
+}
+
 
   @Delete(':id')
   remove(@Param('id') id: string) {
